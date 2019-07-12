@@ -1,0 +1,29 @@
+
+当前混用的头文件为
+	CommonStructDefine.h
+	CommonQueueManager.h
+	EtherioDllExport.h
+
+共使用在下列场合
+	1、windows下驱动和dll的编译
+	2、linux下驱动的编译
+	3、linux下so的编译
+	4、windows和linux下app的编译
+
+宏定义
+	1、OS_WINDOWS和_WIN32，用于在windows下dll和app的编译
+	2、OS_LINUX，用于在linux下
+	3、OS_LINUX_DLL，只用于在linux下dll
+	4、OS_LINUX_DRIVER，只用于在linux下驱动，暂时还没有使用
+
+代码位置
+	尽管当前代码同意，但仍然无法放到同一个位置，当前存放位置在
+	1、windows下的驱动和dll位置
+		etherio\code\dll
+	2、linux下驱动位置
+		linux-2.6.32.15\net\ipacket
+	3、linux下so位置
+		test_control_v5.0.20.2\code\wr_cap_engine\include
+	4、linux下app位置
+		test_control_v5.0.20.2\code\comm_base_module\packetio_wrappers\PacketIO\source\etherio
+

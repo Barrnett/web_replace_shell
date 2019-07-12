@@ -1,0 +1,10 @@
+make 2>a.txt
+
+
+command   >   filename   把把标准输出重定向到一个新文件中 
+command   > >   filename   把把标准输出重定向到一个文件中(追加) 
+command   1   >   fielname   把把标准输出重定向到一个文件中 
+command   >   filename   2> &1   把把标准输出和标准错误一起重定向到一个文件中 
+command   2   >   filename   把把标准错误重定向到一个文件中 
+command   2   > >   filename   把把标准输出重定向到一个文件中(追加) 
+command   > >   filename   2> &1   把把标准输出和标准错误一起重定向到一个文件中(追加) 

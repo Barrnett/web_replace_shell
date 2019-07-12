@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<unierm_ctrl>
+    <common>
+        <reboot period_day="0" timeout_param="180" exe_time="1:00:00" />
+
+	<timeback interval="300">
+		<!-- 当时间回调的时候，需要重新启动的程序 -->
+		<item os="windows" >TestControl.exe</item>			
+
+		<!-- 下边这3个是linux使用的 -->
+		<item os="linux">testcontrol</item>		
+		
+	</timeback>
+
+    </common>
+</unierm_ctrl>

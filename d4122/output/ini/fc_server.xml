@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="GB2312" standalone="no" ?>
+<fc_server>
+
+	<common>
+		<auto_start>1</auto_start>
+		<cmd_line>FC_SERVER_MONITOR_EVNET FC_SERVER_STOP_EVENT 60 30</cmd_line>
+	</common>
+	
+	<net_com>
+		<!--listen_port端口信息在web服务器下netebs_port.xml中定义 -->
+		
+		<!--是否启动一个线程来创建servant,缺省是0-->		
+		<multi_thread>1</multi_thread>
+		
+		<max_client_nums>256</max_client_nums>
+		
+		<recv_timeout_ms>500</recv_timeout_ms>
+		<send_timeout_ms>3000</send_timeout_ms>
+	
+	</net_com>
+	
+	<fc_probe_config onoff = "1">			
+				
+	 <!--	CMD_SERVANT_ID = 1,LIVE_SERVANT_ID = 2, -->
+				
+		<fc_probe>
+			<ip_addr>127.0.0.1</ip_addr>
+				<!--listen_port=0或者没有该项，表示不创建通信接口,这个时候servant_id无效-->
+			<listen_port>84</listen_port>
+			<!-- ;0<=servant_id<=254 -->
+			<servant_id>1</servant_id>
+			<live_servant_id>2</live_servant_id>
+		</fc_probe>
+		
+		<fc_monitor>
+			<ip_addr>127.0.0.1</ip_addr>
+			<!--listen_port=0或者没有该项，表示不创建通信接口,这个时候servant_id无效-->
+			<listen_port>86</listen_port>
+			<!-- ;0<=servant_id<=254 -->
+			<servant_id>1</servant_id>
+		</fc_monitor>
+	
+	</fc_probe_config>	
+	
+	<fc_server_output>
+	
+	</fc_server_output>
+
+	<!-- 获得液晶屏串口的名字, add by xumx 2016-10-24 -->
+	<!-- windows下一般是 COM2, linux下是 /dev/ttyS1 -->
+	<LMB_SERIAL_NAME>/dev/ttyS1</LMB_SERIAL_NAME>
+	
+	<!-- 获得2个E1的串口名字, add by xumx 2016-10-24 -->
+	<E1_SERIAL_NAME_1>/dev/ttyM1</E1_SERIAL_NAME_1>
+	<E1_SERIAL_NAME_2>/dev/ttyM0</E1_SERIAL_NAME_2>
+
+</fc_server>
+
+

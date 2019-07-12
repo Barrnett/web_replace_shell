@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GB2312" standalone="no" ?>
+<test_control>
+	
+	<common>		
+	
+		<log_flux>0</log_flux>
+		
+		<live_log_size>0</live_log_size>
+		<live_log_level>-1</live_log_level>		
+		
+		<!--当底层没有数据的时候，休息多长时间，单位是ms（毫秒）-->
+		<empty_sleep_time>2</empty_sleep_time>	
+		
+		<copy_drv_data>0</copy_drv_data>
+
+	</common>	
+	
+</test_control>
+
+

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VCG_CONFIG>
+	<!--与local_config中的PORT对应-->  
+	<VCG_CARD name="VCG_CARD1">
+		<PORT>eth4</PORT>
+		<!-- E1_MAX: 预配置，只读，最大可加入成员的数量，即E1的个数-->  
+		<E1_MAX>16</E1_MAX>
+		<E1_LIST>
+			<!-- ID: 预配置，只读，每条E1同时只能加入一个VCG内，VCG删除后成员被释放-->  
+			<!-- NAME: 预配置，只读，全局唯一，用于界面显示-->  
+			<E1 alais="专线1">
+				<ID>144</ID>
+				<NAME>E1-1</NAME>
+			</E1>
+			<E1 alais="专线2">
+				<ID>145</ID>
+				<NAME>E1-2</NAME>
+			</E1>
+			<E1 alais="专线3">
+				<ID>146</ID>
+				<NAME>E1-3</NAME>
+			</E1>
+			<E1 alais="专线4">
+				<ID>147</ID>
+				<NAME>E1-4</NAME>
+			</E1>
+			<E1 alais="专线5">
+				<ID>148</ID>
+				<NAME>E1-5</NAME>
+			</E1>
+			<E1 alais="专线6">
+				<ID>149</ID>
+				<NAME>E1-6</NAME>
+			</E1>
+			<E1 alais="专线7">
+				<ID>150</ID>
+				<NAME>E1-7</NAME>
+			</E1>
+			<E1 alais="专线8">
+				<ID>151</ID>
+				<NAME>E1-8</NAME>
+			</E1>
+			<E1 alais="专线9">
+				<ID>152</ID>
+				<NAME>E1-9</NAME>
+			</E1>
+			<E1 alais="专线10">
+				<ID>153</ID>
+				<NAME>E1-10</NAME>
+			</E1>
+			<E1 alais="专线11">
+				<ID>154</ID>
+				<NAME>E1-11</NAME>
+			</E1>
+			<E1 alais="专线12">
+				<ID>155</ID>
+				<NAME>E1-12</NAME>
+			</E1>
+			<E1 alais="专线13">
+				<ID>156</ID>
+				<NAME>E1-13</NAME>
+			</E1>
+			<E1 alais="专线14">
+				<ID>157</ID>
+				<NAME>E1-14</NAME>
+			</E1>
+			<E1 alais="专线15">
+				<ID>158</ID>
+				<NAME>E1-15</NAME>
+			</E1>
+			<E1 alais="专线16">
+				<ID>159</ID>
+				<NAME>E1-16</NAME>
+			</E1>
+		</E1_LIST>
+		<VCG_LIST>
+			<!-- ID: 32位非0整数，全局唯一，每新增一条自动加1 -->  
+			<!-- NAME: 必须全局唯一，用于界面显示，支持中英文混合，不允许为空 -->  
+			<!-- VLAN: 保留，暂不支持，固定填0-->  
+			<!-- MEMBERS: 至少要添加一条E1，否则该VCG无法创建，E1_ID的编号从E1_LIST中选择 -->  
+			<VCG name="VCG1">
+				<ID>1</ID>
+				<VLAN>0</VLAN>
+				<MEMBERS>
+					<E1_ID>144</E1_ID>
+					<E1_ID>145</E1_ID>
+				</MEMBERS>
+			</VCG>
+			<VCG name="VCG2">
+				<ID>2</ID>
+				<VLAN>0</VLAN>
+				<MEMBERS>
+					<E1_ID>146</E1_ID>
+					<E1_ID>147</E1_ID>
+				</MEMBERS>
+			</VCG>
+			<VCG name="VCG3">
+				<ID>3</ID>
+				<VLAN>0</VLAN>
+				<MEMBERS>
+					<E1_ID>148</E1_ID>
+					<E1_ID>149</E1_ID>
+				</MEMBERS>
+			</VCG>
+		</VCG_LIST>
+	</VCG_CARD>
+</VCG_CONFIG>

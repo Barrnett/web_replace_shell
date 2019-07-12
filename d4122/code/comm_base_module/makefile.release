@@ -1,0 +1,100 @@
+
+#这个是工程主路径
+export TOPDIR 		:= $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
+
+export ARCH             := $(shell getconf LONG_BIT)
+
+export TOPDIR_HEAD	:=$(TOPDIR)/../security_probe/import
+
+#默认的输出的路径，如果子目录在主目录1级的位置，可以使用默认输出路径，否则需要在子工程的makefile中修改这个定义
+export TOPDIR_OUT	:=$(TOPDIR)/../../output
+
+#The directory to store the dynamic file 
+export DYNADIR         :=$(TOPDIR_OUT)/bin_$(ARCH)/#End
+
+#The directory to store the static file
+export STATICDIR       :=$(TOPDIR_OUT)/bin_$(ARCH)/#End
+
+#the base directory to store the object file
+export OBJDIRBASE	:=$(TOPDIR_OUT)/obj/#End
+
+
+#当前方案的头文件路径，每个方案的会不一样（通常不同的方案需要修改这里）	
+#export TOPDIR_HEADFILE		:= $(TOPDIR)/_umtsexporth
+
+include config.mk
+OS_CCFLAGS := -DACE_NDEBUG $(OS_CCFLAGS)
+OS_CFLAGS  := -DACE_NDEBUG $(OS_CFLAGS)
+
+CCFLAGS_32 := -D_i386
+CCFLAGS_64 := -D_X64 -m64
+
+OS_CCDEBUGFLAGS := -O3
+
+CC			:= $(CROSSCOMPILE)$(OS_CC)
+CCFLAGS		:= $(OS_CCFLAGS) $(USRCCFLAG) $(CCFLAGS_$(ARCH)) 
+CFLAGS		:= $(OS_CFLAGS) $(USRCCFLAG)
+CPP			:= $(CROSSCOMPILE)$(OS_CPP) 
+AR			:= $(CROSSCOMPILE)$(OS_AR)
+LD			:= $(CROSSCOMPILE)$(OS_LD)
+LDFLAGS		:= $(OS_LDDYNAFLAGS)
+RM			:= $(OS_RM)
+CP			:= $(OS_CP)
+LEX			:= $(OS_LEX)
+LEXFLAGS	:= $(OS_LEXFLAGS)
+YACC		:= $(OS_YACC)
+YACCFLAGS	:= $(OS_YACCFLAGS)
+LATEX		:= $(OS_LATEX)
+DVI2PS		:= $(OS_DVI2PS)
+DVI2PDF		:= $(OS_DVI2PDF)
+MPOST		:= $(OS_METAPOST)
+
+export CC CCFLAGS CPP AR LD LDFLAGS RM CP LEX LEXFLAGS YACC YACCFLAGS
+export LATEX DVI2PS DVI2PDF MPOST
+export OS_CCDYNAFLAGS OS_CCDEBUGFLAGS
+
+#当前方案所包含的项目名称，也就是目录名，每个方案的会不一样（通常不同的方案需要修改这里）	
+SUBDIRS = 	\
+		efilterio	\
+		ByPassManager	\		
+		cpf_wrappers/cpf		\
+		cpf_wrappers/cpf2		\
+		packetio_wrappers/PacketIO	\
+
+#失败的	\
+		simple_filter	\
+
+
+.PHONY: $(SUBDIRS)
+
+all: $(SUBDIRS)
+
+$(SUBDIRS):
+	chmod a+x projectname.sh
+	$(MAKE) -C $@ all
+.PHONY: uninstall
+
+uninstall:
+	for dir in $(SUBDIRS) ; do $(MAKE) -C $$dir uninstall ; done
+
+install:
+	for dir in $(SUBDIRS) ; do $(MAKE) -C $$dir install ; done
+
+depend dep:
+	for dir in $(SUBDIRS) ; do $(MAKE) -C $$dir .depend ; done
+
+clean:
+	for dir in $(SUBDIRS) ; do $(MAKE) -C $$dir clean ; done
+
+mrproper distclean:
+	for dir in $(SUBDIRS) ; do $(MAKE) -C $$dir distclean ; done
+	rm -rf installation/host
+
+#
+# A rule to do nothing.
+#
+dummy:
+
+
+#
+################################################################################

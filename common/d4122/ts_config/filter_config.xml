@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FILTER_CONFIG>
+	<!-- 业务过滤(五元组：源IP，目的IP，协议类型，源port，目的port) -->
+	<!-- ID必须全局唯一，用于内部索引，不对界面显示 -->
+	<!-- NAME必须全局唯一，用于界面显示，支持中英文混合，不允许为空 -->
+	<!-- ADDRESS如果只过滤一个地址，则范围前后两个值相同；多个范围段对外呈现使用“,”分隔 -->
+	<!-- PROTOCOL和PROTOCOL_ID具备一一对应关系，PROTOCOL用于界面呈现字符串，PROTOCOL_ID用于内部读取 
+		 ICMP(1) IGMP(2) TCP(5) UDP(11)-->
+	<!-- PORT的规则与ADDRESS相同 -->
+	<!-- BANDWIDTH显示单位为Kbps -->
+	<!-- QUEUE:0(绝对优先队列);1(加权优先队列1);2(加权优先队列2);3(加权优先队列3);4(加权优先队列4) -->
+	<FILTER name="主机1">
+		<ID>1</ID>
+		<CODE>XH01</CODE>
+		<SOURCE_IP>
+			<ADDRESS>0.0.0.0-255.255.255.255</ADDRESS>
+		</SOURCE_IP>
+		<DESTINATION_IP>
+			<ADDRESS>0.0.0.0-255.255.255.255</ADDRESS>
+		</DESTINATION_IP>
+		<PROTOCOL>ICMP</PROTOCOL>
+		<PROTOCOL_ID>1</PROTOCOL_ID>
+		<PORT>
+			<NUM>0-65535</NUM>
+		</PORT>
+		<BANDWIDTH>64</BANDWIDTH>
+		<QUEUE>0</QUEUE>
+	</FILTER>
+	<FILTER name="主机2">
+		<ID>2</ID>
+		<CODE>JQ01</CODE>
+		<SOURCE_IP>
+			<ADDRESS>0.0.0.0-255.255.255.255</ADDRESS>
+		</SOURCE_IP>
+		<DESTINATION_IP>
+			<ADDRESS>0.0.0.0-255.255.255.255</ADDRESS>
+		</DESTINATION_IP>
+		<PROTOCOL>TCP</PROTOCOL>
+		<PROTOCOL_ID>5</PROTOCOL_ID>
+		<PORT>
+			<NUM>0-65535</NUM>
+		</PORT>
+		<BANDWIDTH>64</BANDWIDTH>
+		<QUEUE>0</QUEUE>
+	</FILTER>
+	<FILTER name="主机3">
+		<ID>3</ID>
+		<CODE>JQ02</CODE>
+		<SOURCE_IP>
+			<ADDRESS>0.0.0.0-255.255.255.255</ADDRESS>
+		</SOURCE_IP>
+		<DESTINATION_IP>
+			<ADDRESS>0.0.0.0-255.255.255.255</ADDRESS>
+		</DESTINATION_IP>
+		<PROTOCOL>UDP</PROTOCOL>
+		<PROTOCOL_ID>11</PROTOCOL_ID>
+		<PORT>
+			<NUM>0-65535</NUM>
+		</PORT>
+		<BANDWIDTH>64</BANDWIDTH>
+		<QUEUE>0</QUEUE>
+	</FILTER>
+</FILTER_CONFIG>

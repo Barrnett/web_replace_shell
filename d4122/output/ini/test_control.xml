@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="GB2312" standalone="no" ?>
+<test_control>
+
+	<!--;需要加载的模块名称，注意顺序问题-->
+	<observer_list>
+		<observer onoff = "0" desc="">filter_mgr</observer>
+		<observer onoff = "0" desc="">capdata_mgr</observer>
+		<observer onoff = "1" desc="">flux_control</observer>			
+	</observer_list>	
+	
+	
+	<common>
+		<auto_start>1</auto_start>		
+		
+		<!--多少秒钟没有数据，认为系统出错，系统重新启动probe程序,缺省60秒,0表示不检查-->
+		<no_pkt_in_secnums>0</no_pkt_in_secnums>	
+		
+		<cmd_line>TEST_CONTROL_MONITOR_EVENT TEST_CONTROL_STOP_EVENT 30 15</cmd_line>
+		
+		<!--;self_host_name 这个配置在netebs.xml上也有一个相同的配置，是对应的-->
+		<self_host_name>mgr.fluxcontrol.test</self_host_name>
+	</common>
+			
+	
+	<net_com>
+	
+	<!--listen_port=0或者没有该项，表示不创建通信接口,这个时候servant_id无效-->
+		<listen_port>84</listen_port>
+		
+	<!-- ;0<=servant_id<=254 -->
+		<cmd_servant_id>1</cmd_servant_id>
+		
+		<live_servant_id>2</live_servant_id>
+		
+		<!--是否启动一个线程来创建servant,缺省是0-->
+		<multi_thread>0</multi_thread>
+		
+		<max_client_nums>20</max_client_nums>
+	
+	</net_com>	
+
+</test_control>
+
+

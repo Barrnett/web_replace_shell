@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="GB2312" standalone="no" ?>
+<serverinfo>
+    <init>
+        <inithost value="127.0.0.1" />
+        <initport value="83" />
+    </init>
+</serverinfo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PEER_CONFIG>
+	<!--PEER_ID: 对局ID，内部使用，全局唯一，不能为0 -->
+	<!--PEER_IP: 对局网内的主机IP段 -->
+	<PEER_NETWORK name="上海">
+		<PEER_ID>1</PEER_ID>
+		<PEER_IP>
+			<IP_RANGE name="上海测试">6.24.148.2-6.24.148.252</IP_RANGE>
+		</PEER_IP>
+		<MAIN_CONFIG>
+			<MAIN_TEST_IP>6.24.148.200</MAIN_TEST_IP>
+		</MAIN_CONFIG>
+		<B1_CONFIG>
+			<B1_TEST_IP>10.1.1.216</B1_TEST_IP>
+		</B1_CONFIG>
+		<B2_CONFIG>
+			<B2_TEST_IP>10.2.1.216</B2_TEST_IP>
+		</B2_CONFIG>
+		<VCG_ID>1</VCG_ID>
+	</PEER_NETWORK>
+	<PEER_NETWORK name="广州"> 
+		<PEER_ID>2</PEER_ID>
+		<PEER_IP> 
+			<IP_RANGE name="广州测试">5.11.18.2-5.11.18.252</IP_RANGE> 
+		</PEER_IP>
+		<MAIN_CONFIG>
+			<MAIN_TEST_IP>5.11.18.200</MAIN_TEST_IP>			
+		</MAIN_CONFIG>
+		<B1_CONFIG>
+			<B1_TEST_IP>10.1.1.217</B1_TEST_IP>
+		</B1_CONFIG>
+		<B2_CONFIG>
+			<B2_TEST_IP>10.2.1.217</B2_TEST_IP>
+		</B2_CONFIG>
+		<VCG_ID>2</VCG_ID>
+	</PEER_NETWORK> 
+	<PEER_NETWORK name="成都"> 
+		<PEER_ID>3</PEER_ID>
+		<PEER_IP> 
+			<IP_RANGE name="成都测试">6.8.6.2-6.8.6.252</IP_RANGE> 
+		</PEER_IP>
+		<MAIN_CONFIG>
+			<MAIN_TEST_IP>6.8.6.200</MAIN_TEST_IP>			
+		</MAIN_CONFIG>
+		<B1_CONFIG>
+			<B1_TEST_IP>10.1.1.215</B1_TEST_IP>
+		</B1_CONFIG>
+		<B2_CONFIG>
+			<B2_TEST_IP>10.2.1.215</B2_TEST_IP>
+		</B2_CONFIG>
+		<VCG_ID>3</VCG_ID>
+	</PEER_NETWORK> 
+</PEER_CONFIG>

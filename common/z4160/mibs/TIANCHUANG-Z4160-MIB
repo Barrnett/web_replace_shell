@@ -1,0 +1,544 @@
+
+-- File Name : TIANCHUANG-Z4160-MIB
+-- Date      : Wed Oct 25 08:13:12 GMT 2017
+-- Author    : AdventNet Agent Toolkit C Edition - MibEditor 6
+
+
+
+TIANCHUANG-Z4160-MIB	DEFINITIONS ::= BEGIN
+	IMPORTS
+		RowStatus, DateAndTime, DisplayString
+			FROM SNMPv2-TC
+		DisplayString
+			FROM RFC1213-MIB
+		enterprises, MODULE-IDENTITY, OBJECT-TYPE, Integer32, Counter64, TimeTicks, IpAddress, NOTIFICATION-TYPE
+			FROM SNMPv2-SMI;
+
+	company	MODULE-IDENTITY
+		LAST-UPDATED	"201610300735Z"
+		ORGANIZATION	"Organization"
+		CONTACT-INFO	"Contact-info"
+		DESCRIPTION		"Description"
+		REVISION		"201610300735Z"
+		DESCRIPTION		""
+		::=  {  enterprises  1960  }
+
+	org	OBJECT IDENTIFIER
+		::=  {  iso  3  }
+
+	dod	OBJECT IDENTIFIER
+		::=  {  org  6  }
+
+	internet	OBJECT IDENTIFIER
+		::=  {  dod  1  }
+
+	private	OBJECT IDENTIFIER
+		::=  {  internet  4  }
+
+	enterprises	OBJECT IDENTIFIER
+		::=  {  private  1  }
+
+	neMgmt	OBJECT IDENTIFIER
+		::=  {  company  1  }
+
+	products	OBJECT IDENTIFIER
+		::=  {  company  2  }
+
+	neSystem	OBJECT IDENTIFIER
+		::=  {  neMgmt  1  }
+
+	uns	OBJECT IDENTIFIER
+		::=  {  products  1  }
+
+	neTrapHostTable	OBJECT-TYPE
+		SYNTAX		SEQUENCE  OF  NeTrapHostEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Description"
+		::=  { neSystem  1 }
+
+	neTrapHostEntry	OBJECT-TYPE
+		SYNTAX		NeTrapHostEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Row Description"
+		INDEX		{  neTrapHostIndex  }
+		::=  { neTrapHostTable 1 }
+
+	NeTrapHostEntry  ::=  SEQUENCE {
+		neTrapHostIndex  Integer32,
+		neTrapHostAddr  IpAddress,
+		neTrapHostPort  Integer32
+		}
+
+
+	neTrapHostIndex	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  neTrapHostEntry  1  }
+
+
+	neTrapHostAddr	OBJECT-TYPE	
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  neTrapHostEntry  2  }
+
+
+	neTrapHostPort	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-write
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  neTrapHostEntry  3  }
+
+	z4160	OBJECT IDENTIFIER
+		::=  {  uns  2  }
+
+	system	OBJECT IDENTIFIER
+		::=  {  z4160  1  }
+
+	configure	OBJECT IDENTIFIER
+		::=  {  z4160  2  }
+
+	status	OBJECT IDENTIFIER
+		::=  {  z4160  3  }
+
+	statistics	OBJECT IDENTIFIER
+		::=  {  z4160  4  }
+
+	trap	OBJECT IDENTIFIER
+		::=  {  z4160  10  }
+
+	cpuUsage	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  10  }
+
+	memUsed	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  11  }
+
+	memTotal	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  12  }
+
+	hddUsed	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  13  }
+
+	hddTotal	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  14  }
+
+	sysStartTime	OBJECT-TYPE	
+		SYNTAX			DateAndTime
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  15  }
+
+	sysUpTime	OBJECT-TYPE	
+		SYNTAX			TimeTicks
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  16  }
+
+	softwareVersion	OBJECT-TYPE	
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  system  17  }
+
+	local	OBJECT IDENTIFIER
+		::=  {  configure  1  }
+
+	peer	OBJECT IDENTIFIER
+		::=  {  configure  2  }
+
+	check	OBJECT IDENTIFIER
+		::=  {  configure  3  }
+
+	filter	OBJECT IDENTIFIER
+		::=  {  configure  4  }
+
+	lanStatTable	OBJECT-TYPE
+		SYNTAX		SEQUENCE  OF  LanStatEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Description"
+		::=  { status  1 }
+
+	lanStatEntry	OBJECT-TYPE
+		SYNTAX		LanStatEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Row Description"
+		INDEX		{  lanIndex  }
+		::=  { lanStatTable 1 }
+
+	LanStatEntry  ::=  SEQUENCE {
+		lanIndex  Integer32,
+		lanLink  INTEGER
+		}
+
+
+	lanIndex	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  lanStatEntry  1  }
+
+
+	lanLink	OBJECT-TYPE	
+		SYNTAX			INTEGER  { down ( 0 ) , speed10M ( 1 ) , speed100M ( 2 ) , speed1000M ( 3 ) } 
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  lanStatEntry  2  }
+
+	e1StatTable	OBJECT-TYPE
+		SYNTAX		SEQUENCE  OF  E1StatEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Description"
+		::=  { status  2 }
+
+	e1StatEntry	OBJECT-TYPE
+		SYNTAX		E1StatEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Row Description"
+		INDEX		{  e1Index  }
+		::=  { e1StatTable 1 }
+
+	E1StatEntry  ::=  SEQUENCE {
+		e1Index  Integer32,
+		e1Alarm  OCTET STRING
+		}
+
+
+	e1Index	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  e1StatEntry  1  }
+
+
+	e1Alarm	OBJECT-TYPE	
+		SYNTAX			OCTET STRING  ( SIZE ( 1  ) ) 
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Byte_1: bit_1 E1LOS, bit_2 E1AIS, bit_3 E1LOOP, bit_4 E1MLOF,bit_5 RDI, bit_6 CRC.(bit from the right side to the left side. 1 for alarm, 0 for normal.)"
+		::=  {  e1StatEntry  2  }
+
+	tunnelStatTable	OBJECT-TYPE
+		SYNTAX		SEQUENCE  OF  TunnelStatEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Description"
+		::=  { status  3 }
+
+	tunnelStatEntry	OBJECT-TYPE
+		SYNTAX		TunnelStatEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Row Description"
+		INDEX		{  peerIndex  }
+		::=  { tunnelStatTable 1 }
+
+	TunnelStatEntry  ::=  SEQUENCE {
+		tunnelMainConnect  INTEGER,
+		tunnelBackup1Connect  INTEGER,
+		tunnelBackup2Connect  INTEGER
+		}
+
+
+	tunnelMainConnect	OBJECT-TYPE	
+		SYNTAX			INTEGER  { off ( 0 ) , onStandby ( 1 ) , onService ( 2 ) } 
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  tunnelStatEntry  1  }
+
+
+	tunnelBackup1Connect	OBJECT-TYPE	
+		SYNTAX			INTEGER  { off ( 0 ) , onStandby ( 1 ) , onService ( 2 ) } 
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  tunnelStatEntry  2  }
+
+
+	tunnelBackup2Connect	OBJECT-TYPE	
+		SYNTAX			INTEGER  { off ( 0 ) , onStandby ( 1 ) , onService ( 2 ) } 
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  tunnelStatEntry  3  }
+
+	serviceStatisticTable	OBJECT-TYPE
+		SYNTAX		SEQUENCE  OF  ServiceStatisticEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Description"
+		::=  { statistics  1 }
+
+	serviceStatisticEntry	OBJECT-TYPE
+		SYNTAX		ServiceStatisticEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Row Description"
+		INDEX		{  serviceIndex  }
+		::=  { serviceStatisticTable 1 }
+
+	ServiceStatisticEntry  ::=  SEQUENCE {
+		serviceIndex  Integer32,
+		serviceID  Integer32,
+		serviceUpBytes  Counter64,
+		serviceUpPackets  Counter64
+		}
+
+
+	serviceIndex	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceStatisticEntry  1  }
+
+
+	serviceID	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceStatisticEntry  2  }
+
+
+	serviceUpBytes	OBJECT-TYPE	
+		SYNTAX			Counter64
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceStatisticEntry  3  }
+
+
+	serviceUpPackets	OBJECT-TYPE	
+		SYNTAX			Counter64
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceStatisticEntry  4  }
+
+	lanLinkInfoNot	NOTIFICATION-TYPE
+		OBJECTS			{ lanLink }
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  trap  1  }
+
+	e1AlarmInfoNot	NOTIFICATION-TYPE
+		OBJECTS			{ e1Alarm }
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  trap  2  }
+
+	tunnelConnectInfoNot	NOTIFICATION-TYPE
+		OBJECTS			{ tunnelMainConnect, tunnelBackup1Connect, tunnelBackup2Connect }
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  trap  3  }
+
+	peerIpRangeTable	OBJECT-TYPE
+		SYNTAX		SEQUENCE  OF  PeerIpRangeEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Description"
+		::=  { peer  1 }
+
+	peerIpRangeEntry	OBJECT-TYPE
+		SYNTAX		PeerIpRangeEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Row Description"
+		INDEX		{  peerIndex, ipRangeIndex  }
+		::=  { peerIpRangeTable 1 }
+
+	PeerIpRangeEntry  ::=  SEQUENCE {
+		peerIndex  Integer32,
+		ipRangeIndex  Integer32,
+		peerIpBegin  IpAddress,
+		peerIpEnd  IpAddress
+		}
+
+
+	peerIndex	OBJECT-TYPE	
+		SYNTAX			Integer32  ( -2147483648 .. 2147483647  ) 
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  peerIpRangeEntry  1  }
+
+
+	ipRangeIndex	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  peerIpRangeEntry  2  }
+
+
+	peerIpBegin	OBJECT-TYPE	
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  peerIpRangeEntry  3  }
+
+
+	peerIpEnd	OBJECT-TYPE	
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  peerIpRangeEntry  4  }
+
+	serviceFilterTable	OBJECT-TYPE
+		SYNTAX		SEQUENCE  OF  ServiceFilterEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Description"
+		::=  { filter  1 }
+
+	serviceFilterEntry	OBJECT-TYPE
+		SYNTAX		ServiceFilterEntry
+		MAX-ACCESS	not-accessible
+		STATUS		current
+		DESCRIPTION	"Row Description"
+		INDEX		{  serviceFilterId  }
+		::=  { serviceFilterTable 1 }
+
+	ServiceFilterEntry  ::=  SEQUENCE {
+		serviceFilterId  Integer32,
+		serviceName  DisplayString,
+		serviceCode  DisplayString,
+		serviceScrIpBegin  IpAddress,
+		serviceSrcIpEnd  IpAddress,
+		serviceDstIpBegin  IpAddress,
+		serviceDstIpEnd  IpAddress,
+		serviceProtocol  Integer32,
+		servicePort  Integer32,
+		serviceFilterBackup1  INTEGER,
+		serviceFilterBackup2  INTEGER
+		}
+
+
+	serviceFilterId	OBJECT-TYPE	
+		SYNTAX			Integer32  ( -2147483648 .. 2147483647  ) 
+		MAX-ACCESS		read-create
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  1  }
+
+
+	serviceName	OBJECT-TYPE	
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  2  }
+
+
+	serviceCode	OBJECT-TYPE	
+		SYNTAX			DisplayString
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  3  }
+
+
+	serviceScrIpBegin	OBJECT-TYPE	
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  4  }
+
+
+	serviceSrcIpEnd	OBJECT-TYPE	
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  5  }
+
+
+	serviceDstIpBegin	OBJECT-TYPE	
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  6  }
+
+
+	serviceDstIpEnd	OBJECT-TYPE	
+		SYNTAX			IpAddress
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  7  }
+
+
+	serviceProtocol	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  8  }
+
+
+	servicePort	OBJECT-TYPE	
+		SYNTAX			Integer32
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Column Description"
+		::=  {  serviceFilterEntry  9  }
+
+
+	serviceFilterBackup1	OBJECT-TYPE	
+		SYNTAX			INTEGER  { deny ( 0 ) , permit ( 1 ) } 
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  serviceFilterEntry  10  }
+
+
+	serviceFilterBackup2	OBJECT-TYPE	
+		SYNTAX			INTEGER  { deny ( 0 ) , permit ( 1 ) } 
+		MAX-ACCESS		read-only
+		STATUS			current
+		DESCRIPTION		"Description"
+		::=  {  serviceFilterEntry  11  }
+
+END

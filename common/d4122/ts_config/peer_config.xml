@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PEER_CONFIG>
+	<!--PEER_ID: 对局ID，内部使用，全局唯一，不能为0 -->
+	<!--PEER_IP: 对局网内的主机IP段 -->
+	<PEER_NETWORK name="北京">
+		<PEER_ID>1</PEER_ID>
+		<PEER_IP>
+			<IP_RANGE name="北京测试">172.16.2.2-172.16.2.252</IP_RANGE>
+		</PEER_IP>
+		<MAIN_CONFIG>
+			<MAIN_TEST_IP>172.16.2.200</MAIN_TEST_IP>
+		</MAIN_CONFIG>
+		<B1_CONFIG>
+			<B1_TEST_IP>10.1.1.241</B1_TEST_IP>
+		</B1_CONFIG>
+		<B2_CONFIG>
+			<B2_TEST_IP>10.2.1.241</B2_TEST_IP>
+		</B2_CONFIG>
+		<VCG_ID>0</VCG_ID>
+	</PEER_NETWORK>
+</PEER_CONFIG>

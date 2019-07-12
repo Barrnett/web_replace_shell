@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="GB2312" standalone="no" ?>
+<ConfigFile>
+    <common>
+        <show_console>1</show_console>
+        <!-- 周期性重新启动设备，
+         period_day间隔天数（不能超过47天,period_day=0表示不需要定期重新启动），
+         exe_time执行的时间（即在几点执行） 
+    	 -->
+        <reboot period_day="3" exe_time="01:00:00" />
+        <cmd_line>UNIERM_CTRL_MONITOR_EVENT UNIERM_CTRL_STOP_EVENT 10 5</cmd_line>
+    </common>
+    <!-- 
+ 监测程序是否被关闭，如果是则需要重新启动程序 .目前有两种方式，
+ 
+ type=event,commmon
+	
+	
+ 一种是event类型：
+ 即通过被监控程序定期的点亮事件(event)，监控程序定期的监测事件(event)是否被点亮。
+ 如果没有被点亮，则认为被监控程序不存在，监控程序会自动重新启动被监控程序。
+ 事件(event)的名称通过命令行参数传递给被监控程序。
+ 
+ 这些类型主要用于新的程序，能够修改成事件监控的程序。
+ 
+ 如果被监控程序将点亮事件的动作放在主要线程中，
+ 这样如果这个线程阻塞了，被监控程序先被关闭然后也可以得到重新启动。从而增强系统的健壮性。
+  
+另外一种是普通类型：
+即通过进程句柄来识别程序是否存在。这对于一些不能更改的程序来使用。
+但是如果程序阻塞了(比如死循环了），监控程序不能监控到该程序不正常，因此这个是否重新启动这个进程。
+
+主要参数说明:
+
+<FileName>:表示被监控程序的文件名,监控程序如果发现被监控程序退出,就从<FileName>指定的地方重新启动程序.
+一般的用于需要指定全路径.如果没有全路径,则会从当前目录下启动程序.
+
+<CommandLine>:启动程序的命令行参数
+
+<WorkingDirectory>:启动程序的工作路径,一般为空
+
+<MonitorEventName>: 被监测事件的名称,如果监控程序在指定的时间内<MonitorEventInterval>发现这个事件没有点亮,就重新启动被监控程序.
+对于event类型有效，对于comment类型无效
+
+<StopEventName>: 停止程序事件的名称,监控程序通过点亮这个事件,要求被监控程序退出(给被监控程序安全退出的机会).
+但是如果在 <StopEventInterval>内被监控程序没有退出,监控程序将强制关闭程序.
+对于event类型有效，对于comment类型无效
+
+<MonitorEventInterval>:单位为s(秒)。如果监控程序在指定的时间内发现这个事件没有点亮,就重新启动被监控程序.
+
+<StopEventInterval>:单位为s(秒)。对于event类型的被监控程序,如果在 <StopEventInterval>内没有关闭程序,就强制关闭程序.
+对于event类型有效，对于comment类型无效
+
+
+int	priority;//0表示系统缺省的优先级，1表示最低优先级，2表示普通优先级，3,4等表示更高的优先级
+
+ -->
+    <MonitorService>    	
+        
+        <monitored_task type="event" onoff="1">
+            <FileName>testcontrol</FileName>
+            <desc>流量控制程序</desc>
+            <CommandLine>-s'TEST_CONTROL_MONITOR_EVENT TEST_CONTROL_STOP_EVENT 30 15' -b</CommandLine>
+            <WorkingDirectory />
+            <MonitorEventName>TEST_CONTROL_MONITOR_EVENT</MonitorEventName>
+            <StopEventName>TEST_CONTROL_STOP_EVENT</StopEventName>
+            <MonitorActiveInterval>30</MonitorActiveInterval>
+            <MonitorExistInterval>3</MonitorExistInterval>
+            <StopEventInterval>15</StopEventInterval>
+            <ConfigState>1</ConfigState>
+            <priority>0</priority>
+        </monitored_task>
+        
+        <monitored_task type="event" onoff="1">
+            <FileName>fcserver</FileName>
+            <desc>服务器程序</desc>
+            <CommandLine>-s'FC_SERVER_MONITOR_EVENT FC_SERVER_STOP_EVENT 60 30' -b</CommandLine>
+            <WorkingDirectory />
+            <MonitorEventName>FC_SERVER_MONITOR_EVENT</MonitorEventName>
+            <StopEventName>FC_SERVER_STOP_EVENT</StopEventName>
+            <MonitorActiveInterval>60</MonitorActiveInterval>
+            <MonitorExistInterval>3</MonitorExistInterval>
+            <StopEventInterval>30</StopEventInterval>
+            <ConfigState>1</ConfigState>
+            <priority>0</priority>
+        </monitored_task>
+
+    </MonitorService>
+    <net_com>
+        <ctrl_program>
+            <!-- 是否记录获取probe，db等状态信息的log信息
+ 		 -->
+            <log_state>0</log_state>
+        </ctrl_program>
+        <listen_port>86</listen_port>
+        <servant_id>1</servant_id>
+        <multi_thread>0</multi_thread>
+        <max_client_nums>20</max_client_nums>
+    </net_com>
+</ConfigFile>

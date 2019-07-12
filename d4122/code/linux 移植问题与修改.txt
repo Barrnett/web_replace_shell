@@ -1,0 +1,167 @@
+端口，
+83，fcserver监听，client连接
+84，testcontrol监听，fcserver连接
+86，uniermctrl监听，fcserver连接
+90，semfc监听，fcserver连接
+
+
+
+
+1、(ok) cpf/NetcomBaseServant.h
+
+该动作占用cpu100%，暂时关掉svc里边的handle_events
+
+
+2、(ok) unierm_ctrl中，exist的判断，不在使用event，使用了mutex，mutex的名字是进程创建是的mutex（mutex_name)
+  active的判断，都是用exist了
+
+3、Pagefile_Memory_Pool_DataStream.cpp里，缓冲区申请的长度变化
+
+
+4、(ok) 磁盘没有区别数据库分区和数据分区，统一使用了/分区替代
+\\192.168.0.253\shared\code\security_probe\main\unierm_ctrl\ProbeDoCmd.cpp
+
+
+
+5、(ok) ethereal格式存包不支持
+
+6、(ok) TIME-WAIT问题
+
+7、ACE assert问题
+	#if defined (ACE_NDEBUG)
+	#define ACE_ASSERT(x) \
+	  (static_cast<void>(0))
+	#else
+	#define ACE_ASSERT(X) ACE_TEST_ASSERT(X)
+	#endif /* ACE_NDEBUG */
+
+8、(ok) fluxcontrol的ByPass的自动切换
+
+9、使用CSubNTServiceBase 的类可能有隐患
+
+10、(ok) \source\os_syscall.cpp
+
+11\SendARP
+12\高精度时间戳
+
+13、NotifyIPChange
+
+14、(ok) license的验证
+
+15、(ok) iconv的验证
+
+16、(ok) www中的alias目录方法
+
+17，(ok)  reboothandle FluxControlObserver.h
+	在TestControlDlg.cpp 中使用消息接收reboot请求，linux暂时没有消息处理机制，这个延后
+	CTestControlDlg::RebootHandler
+
+
+18, (ok) 启动没有定时帧，这个一定要加上
+
+19,如何ghost,如何恢复
+
+20, (ok) 流控不准,可能是因为定时帧的问题
+
+21, (ok) 客户端需要知道服务器的操作系统类型(windows 还是 linux)
+
+23,数据库的文件指定位置（单独数据库作为一台服务器）
+
+24, (ok) 执行数据库脚本没有移植：CSysMaintenanceDoCmd
+
+25,设置端口的时候，同时把probe的防火墙的端口打开或者关闭，这个地方没有做。
+
+我就以192.168.1.0/24这个网段和80端口为例子来给你说明吧。
+iptables -A INPUT -s 192.168.1.0/24 -i eth0 -j DROP
+这是拒绝192.168.1.0/24这个网段的人来访问本机。
+如果指定某台主机的话，就把网段地址指定为主机的IP地址就可以了。
+iptables -A INPUT -s 192.168.1.0/24 --dport 80 -p tcp -i eth0 -j DROP
+句的意思就是，拒绝192.167.1.0/24这个网段的任何主机使用TCP协议从eth0这个网卡来访问本机的80端口。如果使用具体主机的话，跟上面一样，把网段地址改为主机IP地址就可以了。
+iptables -A INPUT -P DROP
+iptables -A FORWORD -P DROP
+iptables -A OUTPUT -p DROP
+iptables -t nat -A PREROUTING -p DROP
+iptables -t nat -A POSTROUTING -p DROP
+iptables -t nat -A OUTPUT -p DROP
+这样你就拒绝了所有人对你的机器的访问了，同样，你可不能访问别人了。
+但是，你还可以加上你自己的条目来让访问别人并让别人来访问你。
+具体的设置，我推荐你看一下鸟哥的linux相关资料，他的官方网站是：
+www.vbird.org
+
+
+26, (ok) 驱动无法访问的提示
+
+27, (ok) 客户端升级包解压缩后，传送的文件位置不对，应该是netebs\unierm_upgrade\wanren_Upgrade_Tool.5.0.20.0.0.full.upl，现在是netebs
+
+28，(ok) 升级后，probe无法继续和客户端通讯，可能需要修改客户端的通讯部分
+	修改为升级后重启系统
+
+other_tools.cpp
+bool CPF::TestProcMutex(const char *event_name)
+
+
+29, (ok) 审计无邮件内容
+	strupr移植不正确，已修改
+
+30，（ok，朱忠平）部分IP查看个人历史出现断言
+#7  0xb75993ff in CCommonHistDoCmd::DoMySqlFlux (mysql_helper=0xb3206ba8, 
+    sql=0xa1bdbf4 "SELECT STAT_TIME,ORIG_BYTES_IN,ORIG_BYTES_OUT,ORIG_BYTES_BCAST,ORIG_PKTS_IN,ORIG_PKTS_OUT,ORIG_PKTS_BCAST,BYTES_IN,BYTES_OUT,BYTES_BCAST,PKTS_IN,PKTS_OUT,PKTS_BCAST,CONNS_TCP_SUCCESS,CONNS_TCP_FAIL,CO"..., table_name=0xa1c7fcc "HOUR_EX_APP_BASE_USR", begin_time=1293984000, end_time=1294070400, 
+    table_type=TIME_QUERY_COND::HOUR_TABLE, vt_data=...) at source/CommonHistDoCmd.cpp:151
+151                     ACE_ASSERT(empty_count == should_count-buf_count);
+	
+
+31，（OK) msn审计会出现异常
+#0  0xb509f67b in std::string::assign(std::string const&) () from /usr/lib/libstdc++.so.6
+#1  0xb509f754 in std::string::operator=(std::string const&) () from /usr/lib/libstdc++.so.6
+#2  0xad16e9f2 in CMSNAppDLink::Init (this=0x93bba00, tools=..., item=...) at source/MSNAppDLink.cpp:33
+33              remoteUserInfo.m_strRemoteUser = item.remoteAcct;
+
+#3  0xad16d88d in CMSNAppDLImp::CreateAppLink (this=0x8f1ebf0, pData=0x8e01cc4) at source/MSNAppDLImp.cpp:98
+#4  0xb529c7f3 in CAppLoaderTool::GetNewAppLink (this=0x8ef12f8, pData=0x8e01cc4, pTransLink=0x93c0c98, tcpip_type=CTransLink::BASE_TCP)
+    at source/AppDLLImp.cpp:143
+#5  0xb52da097 in COneProtoImp::CreateAppLink (this=0x8ef12ec, pData=0x8e01cc4, pTransLink=0x93c0c98, tcpip_type=CTransLink::BASE_TCP)
+    at source/ProtoDLLImp.cpp:30
+	经分析怀疑是没有对item的定义和ftp中有同名结构定义，导致运行时出现异常，修改了mail中的定义后，暂未出现问题
+
+32，msn发送文件走https协议，无法在msn文件中看到
+
+33, （ok）审计中，邮件无法下载
+	创建路径时权限为760，导致web无法访问到该文件，修改成777就可以了（ CPF::CreateFullDirecory）
+	在回放测试是，产生了大量的邮件审计信息，共计2G左右，文件数未知，也可能会导致web异常
+
+
+
+34、（OK）认证功能不行
+
+35、pcap的数据不能回放
+
+36, （OK）读网卡ip地址，可能需要字节序转换
+
+37，（OK）web认证时nRequestSeq字段需要由int转为short，如何转，
+	在页面\\192.168.0.253\root_path\opt\lampp\www\auth\ProbeSocket.php中，46行
+	将random%65535后，数据减小为short
+
+38，(OK), linux下网卡名称的修改，eth0等
+
+39，(OK), 无法监控数据库进程
+
+40，(OK), 无法镜像的问题，创建镜像发送固定为single的方式（3），而代码当前只支持fifo方式（1）
+	MirrorOutConfig.cpp 文件的126行	，
+	切换后配置文件仍然被写为3，还需要修改
+
+41, (ok) 互联网流量-》启停详细分析-》停止互联网流行分析，会导致testcontrol程序退出
+	   at /home/unierm/test_control/code/security_probe/tcpip_mgr/flux_control_common/export/AppLiveStat.h:26
+			ACE_ASSERT(m_nRef==0);
+
+42,(OK) 上网控制-》阻断员工访问，
+	 输入qzone关键字，不能屏蔽QQ空间，在windows下可以，linux下不行
+	经过分析，在做这个功能时，使用了字符转换，用到了wchar_t结构，在win下为2个字节，在linux下为4个字节。
+	因此win下的 wchar_t(qzone)为10个字节，linux下为12个字节，导致关键字的长度不一致。因此阻断判断时，不准确
+	
+
+
+43、员工信息里边，QQ帐号异常
+
+44、(ok) 串口输出和登录
+
+45、协议栈去绑定（ip）

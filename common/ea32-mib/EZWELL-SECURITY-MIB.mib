@@ -1,0 +1,358 @@
+-- Easy BroadBand Technology MIB VER 2.0 (date 2009.10.1)
+--
+-- Easy BroadBand Technology specific MIB for security property.
+-- dated  2009.10.1
+-- Version 2.0 
+
+EZWELL-SECURITY-MIB DEFINITIONS ::= BEGIN
+    IMPORTS
+          MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,TimeTicks
+          	FROM SNMPv2-SMI
+   		  DisplayString
+      		FROM RFC1213-MIB
+          MODULE-COMPLIANCE, OBJECT-GROUP, NOTIFICATION-GROUP
+            FROM SNMPv2-CONF
+          eciSecurity 
+          	FROM EZWELL-GENERAL-MODEL-MIB 
+        eciESDeviceIndex 
+          	FROM EZWELL-ELEMENTSTRUCTURE-MIB;  
+          	       
+		eciSecurityUser OBJECT IDENTIFIER ::= { eciSecurity 1 }  
+		
+		eciSecurityUserManagerTable OBJECT-TYPE
+       SYNTAX      SEQUENCE OF EciSecurityUserManagerEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current       
+       DESCRIPTION
+               "user manager table"     
+       ::= { eciSecurityUser 1 }
+
+    eciSecurityUserManagerEntry OBJECT-TYPE
+       SYNTAX      EciSecurityUserManagerEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current      
+       DESCRIPTION
+               "user manager table entry"     
+       INDEX   { eciESDeviceIndex  }
+       ::= { eciSecurityUserManagerTable 1 }
+       
+    EciSecurityUserManagerEntry ::=
+       SEQUENCE { 
+       	 		eciSecurityUserNumber INTEGER,
+       	 		eciSecurityUserNew DisplayString,
+       	 		eciSecurityUserModify DisplayString,
+       	 		eciSecurityUserDelete DisplayString,
+       	 		eciSecurityUserLogin DisplayString,
+       	 		eciSecurityUserActive DisplayString
+ 				}  
+ 				
+	  eciSecurityUserNumber OBJECT-TYPE
+       SYNTAX      INTEGER 
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               "number of user"     
+       ::= { eciSecurityUserManagerEntry 1 }	
+
+	  eciSecurityUserNew OBJECT-TYPE
+       SYNTAX      DisplayString 
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               "new a user"     
+       ::= { eciSecurityUserManagerEntry 2 }	
+
+	  eciSecurityUserModify OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               "modify a user"     
+       ::= { eciSecurityUserManagerEntry 3 }	
+
+	  eciSecurityUserDelete OBJECT-TYPE
+       SYNTAX      DisplayString 
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               "delete a user"     
+       ::= { eciSecurityUserManagerEntry 4 }	
+
+	  eciSecurityUserLogin OBJECT-TYPE
+       SYNTAX      DisplayString 
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               "login a user"     
+       ::= { eciSecurityUserManagerEntry 5 }	
+
+	  eciSecurityUserActive OBJECT-TYPE
+       SYNTAX      DisplayString 
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               "active a Operationg"     
+       ::= { eciSecurityUserManagerEntry 6 }	
+       
+		eciSecurityUserOperTable OBJECT-TYPE
+       SYNTAX      SEQUENCE OF EciSecurityUserOperEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current       
+       DESCRIPTION
+               "user operation table"     
+       ::= { eciSecurityUser 2 }
+
+    eciSecurityUserOperEntry OBJECT-TYPE
+       SYNTAX      EciSecurityUserOperEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current      
+       DESCRIPTION
+               "user operation table entry"     
+       INDEX   { eciESDeviceIndex,eciSecurityUserIndex  }
+       ::= { eciSecurityUserOperTable 1 }
+       
+    EciSecurityUserOperEntry ::=
+       SEQUENCE { 
+       	 		eciSecurityUserOpName DisplayString,
+       	 		eciSecurityUserOpPassword DisplayString,
+       	 		eciSecurityUserOpLevel INTEGER,
+       	 		eciSecurityUserOpStartTime DisplayString,
+       	 		eciSecurityUserOpValidTime DisplayString,
+       	 		eciSecurityUserOpValidForever INTEGER,
+       	 		eciSecurityUserOpDesc DisplayString,
+       	 		eciSecurityUserOpRePassword DisplayString
+ 				}  
+ 				
+	  eciSecurityUserOpName OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 1 }		
+	  eciSecurityUserOpPassword OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 2 }		
+	  eciSecurityUserOpLevel OBJECT-TYPE
+       SYNTAX      INTEGER{
+       									admin(1),
+       									superuser(2),
+       									user(3)
+       							}
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 3 }		
+	  eciSecurityUserOpStartTime OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 4 }		
+	  eciSecurityUserOpValidTime OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 5 }		
+	  eciSecurityUserOpValidForever OBJECT-TYPE
+       SYNTAX      INTEGER{
+       									forever(1),
+       									seevalidtime(2)
+       							}
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 6 }		
+       
+	  eciSecurityUserOpDesc OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 7 }		
+       
+	  eciSecurityUserOpRePassword OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserOperEntry 8 }	
+       
+    eciSecurityUserTable OBJECT-TYPE
+       SYNTAX      SEQUENCE OF EciSecurityUserEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current       
+       DESCRIPTION
+               "user operation table"     
+       ::= { eciSecurityUser 3 }
+
+    eciSecurityUserEntry OBJECT-TYPE
+       SYNTAX      EciSecurityUserEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current      
+       DESCRIPTION
+               "user operation table entry"     
+       INDEX   { eciESDeviceIndex,eciSecurityUserIndex  }
+       ::= { eciSecurityUserTable 1 }
+       
+    
+    EciSecurityUserEntry ::=
+       SEQUENCE { 
+       	 		eciSecurityUserIndex INTEGER,
+       	 		eciSecurityUserName DisplayString,
+       	 		eciSecurityUserPassword DisplayString,
+       	 		eciSecurityUserLevel INTEGER,
+       	 		eciSecurityUserStartTime DisplayString,
+       	 		eciSecurityUserValidTime DisplayString,
+       	 		eciSecurityUserValidForever INTEGER,
+       	 		eciSecurityUserDesc DisplayString
+ 				}  
+	  eciSecurityUserIndex OBJECT-TYPE
+       SYNTAX      INTEGER
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               "unique index"     
+       ::= { eciSecurityUserEntry 1 }		
+	  eciSecurityUserName OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserEntry 2 }		
+	  eciSecurityUserPassword OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserEntry 3 }		
+	  eciSecurityUserLevel OBJECT-TYPE
+       SYNTAX      INTEGER{
+       									admin(1),
+       									superuser(2),
+       									user(3)
+       							}
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserEntry 4 }		
+	  eciSecurityUserStartTime OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserEntry 5 }		
+	  eciSecurityUserValidTime OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserEntry 6 }		
+	  eciSecurityUserValidForever OBJECT-TYPE
+       SYNTAX      INTEGER{
+       									forever(1),
+       									seevalidtime(2)
+       							}
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserEntry 7 }		
+	  eciSecurityUserDesc OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityUserEntry 8 }		
+
+-- current user list 
+		eciSecurityCurrentUser OBJECT IDENTIFIER ::= { eciSecurity 2 }  
+		
+		eciSecurityCurrentUserTable OBJECT-TYPE
+       SYNTAX      SEQUENCE OF EciSecurityCurrentUserEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current       
+       DESCRIPTION
+               "user manager table"     
+       ::= { eciSecurityCurrentUser 1 }
+
+    eciSecurityCurrentUserEntry OBJECT-TYPE
+       SYNTAX      EciSecurityCurrentUserEntry
+       MAX-ACCESS  not-accessible
+       STATUS      current      
+       DESCRIPTION
+               "user manager table entry"     
+       INDEX   { eciESDeviceIndex,eciSecurityCurrentUserIndex  }
+       ::= { eciSecurityCurrentUserTable 1 }
+       
+    EciSecurityCurrentUserEntry ::=
+       SEQUENCE { 
+       	 		eciSecurityCurrentUserIndex INTEGER,
+       	 		eciSecurityCurrentUserName DisplayString,
+       	 		eciSecurityCurrentUserSource INTEGER,
+       	 		eciSecurityCurrentUserIP DisplayString,
+       	 		eciSecurityCurrentUserLogTime TimeTicks,
+       	 		eciSecurityCurrentUserLogout DisplayString
+ 				}  		
+		
+		eciSecurityCurrentUserIndex OBJECT-TYPE
+       SYNTAX      INTEGER
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               "unique index"     
+       ::= { eciSecurityCurrentUserEntry 1 }		
+	  eciSecurityCurrentUserName OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityCurrentUserEntry 2 }		
+    eciSecurityCurrentUserSource OBJECT-TYPE
+       SYNTAX      INTEGER
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityCurrentUserEntry 3 }	
+    eciSecurityCurrentUserIP OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityCurrentUserEntry 4 }	
+    eciSecurityCurrentUserLogTime OBJECT-TYPE
+       SYNTAX      TimeTicks
+       MAX-ACCESS  read-only
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityCurrentUserEntry 5 }	
+    eciSecurityCurrentUserLogout OBJECT-TYPE
+       SYNTAX      DisplayString
+       MAX-ACCESS  read-write
+       STATUS      current      
+       DESCRIPTION
+               ""     
+       ::= { eciSecurityCurrentUserEntry 6 }	
+	  
+END
